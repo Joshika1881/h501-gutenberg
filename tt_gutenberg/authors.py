@@ -14,9 +14,10 @@ def list_authors(by_languages=False, alias=False):
     if by_languages:
         authors = (
             data.groupby(name_column)["language"]
-            .nunique()
+            .count()
             .sort_values(ascending=False)
         )
         return authors.index.tolist()
 
     return data[name_column].drop_duplicates().tolist()
+
