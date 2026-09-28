@@ -5,7 +5,7 @@ def list_authors(by_languages=False, alias=False):
     """Return authors, optionally sorted by translation count."""
     data = get_data()
 
-    name_column = "alias" if alias else "author_author"
+    name_column = "alias" if alias else "author_x"
 
     if alias:
         data = data.dropna(subset=["alias"])
