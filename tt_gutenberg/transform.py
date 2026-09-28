@@ -10,21 +10,17 @@ DATA = {
         "https://raw.githubusercontent.com/rfordatascience/tidytuesday/"
         "main/data/2025/2025-06-03/gutenberg_metadata.csv"
     ),
+    "gutenberg_languages.csv": (
+        "https://raw.githubusercontent.com/rfordatascience/tidytuesday/"
+        "main/data/2025/2025-06-03/gutenberg_languages.csv"
+    ),
 }
 
 
 def get_data():
     """Load and merge the Gutenberg authors and metadata datasets."""
-    datasets = [read_csv(source) for source in DATA.values()]
-
-    authors = next(
-        data for data in datasets
-        if "alias" in data.columns
-    )
-    metadata = next(
-        data for data in datasets
-        if "title" in data.columns
-    )
+    authors = read_csv(DATA["gutenberg_authors.csv"])
+    metadata = read_csv(DATA["gutenberg_metadata.csv"])
 
     return merge(
         authors,
