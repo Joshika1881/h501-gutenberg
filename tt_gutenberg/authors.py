@@ -1,8 +1,8 @@
-from tt_gutenberg.transform import get_data
+from tt_gutenberg.transform import get_data, get_languages
 
 
 def list_authors(by_languages=False, alias=False):
-    """Return authors or aliases, optionally sorted by language count."""
+    """Return authors or aliases, optionally sorted by translation count."""
     data = get_data()
     name_column = "alias" if alias else "author_x"
 
@@ -11,9 +11,15 @@ def list_authors(by_languages=False, alias=False):
         data = data[data["alias"].str.strip() != ""]
 
     if by_languages:
-        data = data.dropna(subset=["language"]).copy()
-        data["language"] = data["language"].str.split("/")
-        data = data.explode("language")
+        languages = get_languages()
+
+        data = data.drop(
+            columns=["language"],
+            errors="ignore",
+        ).merge(
+            languages[["gutenberg_id", "language"]],
+            on="gutenberg_id",
+        )
 
         counts = (
             data.groupby(name_column)["language"]
