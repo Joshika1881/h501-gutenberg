@@ -17,7 +17,7 @@ def list_authors(by_languages=False, alias=False):
 
         counts = (
             data.groupby(name_column)["language"]
-            .nunique()
+            .count()
             .sort_values(ascending=False)
         )
 
