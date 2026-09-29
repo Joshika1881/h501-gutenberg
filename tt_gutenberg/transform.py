@@ -13,12 +13,17 @@ def get_data():
         authors = pd.read_csv(DATA + "gutenberg_authors.csv")
         metadata = pd.read_csv(DATA + "gutenberg_metadata.csv")
 
-    return pd.merge(
+    data = pd.merge(
         authors,
         metadata,
         on="gutenberg_author_id",
         suffixes=("_alias", ""),
     )
+
+    if "author_alias" not in data.columns and "author" in data.columns:
+        data = data.rename(columns={"author": "author_alias"})
+
+    return data
 
 
 def get_languages():
