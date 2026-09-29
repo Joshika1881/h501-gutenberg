@@ -17,7 +17,7 @@ def get_data():
         authors,
         metadata,
         on="gutenberg_author_id",
-        suffixes=("_alias", "_metadata"),
+        suffixes=("_alias", ""),
     )
 
 
